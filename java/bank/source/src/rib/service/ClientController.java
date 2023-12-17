@@ -45,4 +45,9 @@ public class ClientController {
     public void deleteClient(@PathVariable Client client) {
     	System.out.println("client is " + client);
     }
+
+    @PutMapping("/{id}")
+    public Client dummyFunction(@PathVariable int id, @RequestBody Client updatedClient) throws Exception {
+    	System.out.println("")
+    }
 }
