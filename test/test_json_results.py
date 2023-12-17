@@ -16,6 +16,8 @@ def ground_truth_path(generated_report, base_folder):
 
     if language == 'java':
         path = os.path.join(base_folder, language, 'bank', GROUND_TRUTH_FILE_NAME)
+    elif language == 'go':
+        path = os.path.join(base_folder, language, 'go-test-project', GROUND_TRUTH_FILE_NAME)
 
     else:
         assert 'not supported yet'
@@ -93,7 +95,6 @@ def compare_flows(report_generated, report_expected):
         # the expected report is from ui and the generated report is from the engine - should rename
         report_generated['results']['flows_result']['flows_artifacts']['Encapsulated'] = \
             report_generated['results']['flows_result']['flows_artifacts'].pop('Container Pii')
-
     compare_test_passed = True
     try:
         for category in report_expected['results']['flows_result']['flows_artifacts']:
