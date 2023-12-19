@@ -47,7 +47,8 @@ public class ClientController {
     }
 
     @PutMapping("/{id}")
-    public Client dummyFunction(@PathVariable int id, @RequestBody Client updatedClient) throws Exception {
+    public String dummyFunction(@PathVariable int id, @RequestBody Client updatedClient) throws Exception {
     	System.out.println("");
+      return "ok";
     }
 }
