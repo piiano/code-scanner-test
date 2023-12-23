@@ -1,6 +1,7 @@
 package rib.service;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -180,6 +181,11 @@ public class ClientService {
 	        BankAccount bankAccount = null;
 	        Client client = new Client(id, firstName, lastName, cnp, email, address,
 	        		phoneNumber, customerAdvisors, bankAccount);
+			// JDBC -> log
+			System.out.println("Client's first name is "+client.getFirstName());
+			// JDBC -> external
+			PreparedStatement stmt1 = conn.prepareStatement("select * from client where lastName = ?");
+			stmt1.setString(1, client.getFirstName());
 	        lista.add(client);
 	        addressService.saveAddress(address);
 	      }
