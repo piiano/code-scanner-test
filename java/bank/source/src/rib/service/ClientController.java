@@ -25,6 +25,11 @@ public class ClientController {
     }
     
     
+    @PostMapping
+    public Client updateClientName(@RequestBody Client client, String firstName) throws Exception {
+    	client.setFirstName(firstName);
+
+    }
 
     
     @PostMapping
