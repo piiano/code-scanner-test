@@ -17,6 +17,10 @@ import org.hibernate.Hibernate;
 @Entity
 @Table(name = "Client")
 public class Client {
+
+	public static Client LUKE = new Client("001","Luke", "Skywalker", 1l,"luke.,skwyalker@fake.com",null, "123",null, null);
+
+
 	@Id
 	@Column(name = "No")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
