@@ -81,12 +81,28 @@ func (u UserObj) Read(db *sql.DB, id string) (User, error) {
 	}
 
 	if rows.Next() {
-		var user User
-		var profile Profile
-		err := rows.Scan(&user.ID, &user.Name, &user.Email, &user.Password, &profile.Position, &profile.Phone)
+		var id int
+		var name string
+		var email string
+		var password string
+		var position string
+		var phone string
+		err := rows.Scan(&id, &name, &email, &password, &position, &phone)
 		if err != nil {
 			log.Println(err)
 		}
+
+		user := User{
+			ID: id,
+		}
+		user.Name = name
+		user.Email = email
+		user.Password = password
+		user.Profile.Position = position
+		user.Profile.Phone = phone
+
+		log.Println("read name: ", user.Name)
+		log.Println("read email: ", user.Email)
 
 		return user, nil
 	}
@@ -100,6 +116,8 @@ func (u UserObj) ReadAll(db *sql.DB) []User {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	fmt.Println("read all users:", rows)
 
 	var users []User
 	for rows.Next() {
