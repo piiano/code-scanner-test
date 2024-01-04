@@ -46,12 +46,12 @@ func UserAdd(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	model.UserObj{}.Add(db, user)
-	w.Write([]byte("ok\n"))
-
 	auditor := audit.Auditor{
 		UserEmail: user.Email,
 		AddedTime: time.Now(),
 	}
 	auditor.Audit()
+
+	model.UserObj{}.Add(db, user)
+	w.Write([]byte(user.Name + " added\n"))
 }
