@@ -1,7 +1,13 @@
 import copy
 import json
 import os
-from .test_json_results import compare_persistency, compare_flows, check_json, GROUND_TRUTH_FILE_NAME
+
+from .test_json_results import (
+    GROUND_TRUTH_FILE_NAME,
+    check_json,
+    compare_flows,
+    compare_persistency,
+)
 
 LANG = 'java'
 PROJECT = 'bank'

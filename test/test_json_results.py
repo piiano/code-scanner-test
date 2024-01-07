@@ -91,7 +91,7 @@ def compare_persistency(report_generated, report_expected):
 
 def compare_flows(report_generated, report_expected):
     if 'Container Pii' in report_generated['results']['flows_result']['flows_artifacts'] \
-        and 'Encapsulated' in report_expected['results']['flows_result']['flows_artifacts']:
+            and 'Encapsulated' in report_expected['results']['flows_result']['flows_artifacts']:
         # the expected report is from ui and the generated report is from the engine - should rename
         report_generated['results']['flows_result']['flows_artifacts']['Encapsulated'] = \
             report_generated['results']['flows_result']['flows_artifacts'].pop('Container Pii')
@@ -117,7 +117,7 @@ def compare_flows(report_generated, report_expected):
                             f'inconsistency between expected and generated flows category: {category}, rule_type: {rule_type}'
                             f' \n expected: {expected_flows} '
                             f'\n generated: {generated_flows}')
-    except Exception as e:
+    except Exception:
         traceback.print_exc()
         return False
 
