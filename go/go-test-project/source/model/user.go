@@ -4,29 +4,35 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+
+	"gorm.io/gorm"
 )
 
 type UserObj struct {
 }
 
 type User struct {
-	ID       int     `json:"id"`
-	Name     string  `json:"name"`
-	Email    string  `json:"email"`
-	Password string  `json:"password"`
-	Profile  Profile `json:"profile"`
+	gorm.Model         // Includes fields ID, CreatedAt, UpdatedAt, DeletedAt
+	Name       string  `json:"name"`
+	Email      string  `json:"email" gorm:"index"`
+	Password   string  `json:"password"`
+	Profile    Profile `json:"profile" gorm:"foreignKey:UserID"`
 }
 
 type Profile struct {
-	Position string `json:"position"`
-	Phone    string `json:"phone"`
-	Address  Addr   `json:"address"`
+	gorm.Model        // Includes fields ID, CreatedAt, UpdatedAt, DeletedAt
+	UserID     int    // Foreign key for User
+	Position   string `json:"position"`
+	Phone      string `json:"phone"`
+	Address    Addr   `json:"address" gorm:"foreignKey:ProfileID"`
 }
 
 type Addr struct {
-	Street  string `json:"street"`
-	City    string `json:"city"`
-	Country string `json:"country"`
+	gorm.Model        // Includes fields ID, CreatedAt, UpdatedAt, DeletedAt
+	ProfileID  int    // Foreign key for Profile
+	Street     string `json:"street"`
+	City       string `json:"city"`
+	Country    string `json:"country"`
 }
 
 func CreateUserTable(db *sql.DB, name string) {
@@ -73,7 +79,7 @@ func createAddress(db *sql.DB) {
 }
 
 func (u UserObj) Read(db *sql.DB, id string) (User, error) {
-	sql := fmt.Sprintf("SELECT id, name, email, password, position, phone FROM users WHERE id = '%s'", id)
+	sql := fmt.Sprintf("SELECT name, email, password, position, phone FROM users WHERE id = '%s'", id)
 	rows, err := db.Query(sql)
 	if err != nil {
 		log.Fatal(err)
@@ -81,25 +87,25 @@ func (u UserObj) Read(db *sql.DB, id string) (User, error) {
 	}
 
 	if rows.Next() {
-		var id int
 		var name string
 		var email string
 		var password string
 		var position string
 		var phone string
-		err := rows.Scan(&id, &name, &email, &password, &position, &phone)
+		err := rows.Scan(&name, &email, &password, &position, &phone)
 		if err != nil {
 			log.Println(err)
 		}
 
 		user := User{
-			ID: id,
+			Name:     name,
+			Email:    email,
+			Password: password,
+			Profile: Profile{
+				Position: position,
+				Phone:    phone,
+			},
 		}
-		user.Name = name
-		user.Email = email
-		user.Password = password
-		user.Profile.Position = position
-		user.Profile.Phone = phone
 
 		log.Println("read name: ", user.Name)
 		log.Println("read email: ", user.Email)
