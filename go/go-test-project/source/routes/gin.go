@@ -28,7 +28,7 @@ func UserAddGin(c *gin.Context) {
 	db := c.MustGet("db").(*sql.DB)
 
 	var user model.User
-	if err := c.BindJSON(user); err != nil {
+	if err := c.BindJSON(&user); err != nil {
 		c.String(http.StatusBadRequest, "Invalid JSON in request body")
 		return
 	}
