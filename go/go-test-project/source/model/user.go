@@ -6,6 +6,8 @@ import (
 	"log"
 
 	"gorm.io/gorm"
+
+	"go-test-project/util"
 )
 
 type UserObj struct {
@@ -109,6 +111,7 @@ func (u UserObj) Read(db *sql.DB, id string) (User, error) {
 
 		log.Println("read name: ", user.Name)
 		log.Println("read email: ", user.Email)
+		util.WriteFile(user.Name)
 
 		return user, nil
 	}
