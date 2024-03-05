@@ -30,7 +30,7 @@ type Profile struct {
 }
 
 type Addr struct {
-	gorm.Model        // Includes fields ID, CreatedAt, UpdatedAt, DeletedAt
+	ID         uint   `gorm:"primarykey"`
 	ProfileID  int    // Foreign key for Profile
 	Street     string `json:"street"`
 	City       string `json:"city"`
