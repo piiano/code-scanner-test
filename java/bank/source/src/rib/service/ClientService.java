@@ -18,6 +18,7 @@ import rib.entity.Address;
 import rib.entity.BankAccount;
 import rib.entity.Client;
 import rib.entity.CustomerAdvisors;
+import rib.entity.Prime;
 import rib.util.HibernateUtils;
 
 @SuppressWarnings("rawtypes")
@@ -93,6 +94,10 @@ public class ClientService {
 		System.err.println("Date adaugate cu succes!");
 		query.executeUpdate();
 		session.getTransaction().commit();
+	}
+	
+	public void addCustomTypeFlow(Prime prime) {
+		System.err.println("Prime value is " + prime.getNo() + prime.getAnotherOne());
 	}
 
 	public void clientLogin() {
