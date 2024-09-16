@@ -1,5 +1,7 @@
 import axios from 'axios';
 import {Client} from './model/Client';
+import {getData, RequestParams} from './external/ExternalRequest';
+import {User} from './User';
 const serverUrl = 'http://localhost:8080/api/clients';
 
 // Using axios for GET request to /api/clients
@@ -77,4 +79,23 @@ async function deleteClient(id: number): Promise<void> {
     console.error(`Error deleting client with id ${id}:`, error);
     throw error;
   }
+}
+
+//using external ebay like api
+
+async function doExternalRequest(): Promise<void> {
+  const resposne = await getData<User[]>({
+    req: null,
+    clientName: 'clientName',
+    path: 'https://api.example.com/users',
+    params: [],
+  })
+    .then(response => {
+      console.log(response.data); // Process the data
+    })
+    .catch(error => {
+      console.error(error); // Handle the error
+    });
+
+  console.log('response', resposne);
 }
